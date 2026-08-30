@@ -50,6 +50,7 @@ class DoublyLinkedList:
 
         return temp 
 
+    # TC = O(1)
     def prepend(self, value):
         new_node = Node(value)
 
@@ -65,6 +66,7 @@ class DoublyLinkedList:
 
         return True
 
+    # TC = O(1)
     def pop_start(self):
         if self.head is None:
             return
