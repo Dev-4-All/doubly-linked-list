@@ -12,3 +12,8 @@ my_doubly_linked_list.print_list()
 print(my_doubly_linked_list.pop().get_value()) # 2 nodes
 print(my_doubly_linked_list.pop().get_value()) # 1 node
 print(my_doubly_linked_list.pop()) # No nodes
+
+# prepend
+my_doubly_linked_list.prepend(10)
+my_doubly_linked_list.prepend(5)
+my_doubly_linked_list.print_list()
