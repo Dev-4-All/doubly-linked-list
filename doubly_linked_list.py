@@ -84,3 +84,19 @@ class DoublyLinkedList:
         self.length -= 1
 
         return temp
+
+    # TC = O(n)
+    def get(self, index):
+        if index < 0 or index >= self.length:
+            return
+
+        if index < self.length/2:
+            temp = self.head
+            for _ in range(index):
+                temp = temp.next
+        else:
+            temp = self.tail
+            for _ in range(self.length-1, index, -1):
+                temp = temp.prev
+
+        return temp
