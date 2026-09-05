@@ -100,3 +100,13 @@ class DoublyLinkedList:
                 temp = temp.prev
 
         return temp
+
+    # TC = O(n)
+    def set_value(self, index, value):
+        req_node = self.get(index)
+
+        if req_node is not None:
+            req_node.value = value
+            return True
+        
+        return False
