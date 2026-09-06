@@ -46,3 +46,11 @@ print()
 # set
 my_doubly_linked_list.set_value(2, 0)
 my_doubly_linked_list.print_list()
+
+print()
+
+# insert
+my_doubly_linked_list.insert(0, 0)
+my_doubly_linked_list.insert(my_doubly_linked_list.get_length(), 0)
+my_doubly_linked_list.insert(4, 15)
+my_doubly_linked_list.print_list()
