@@ -135,5 +135,29 @@ class DoublyLinkedList:
 
         return True
 
+    # TC = O(n)
+    def remove(self, index):
+        if index < 0 or index >= self.length:
+            return
+
+        if index == 0:
+            return self.pop_start()
+
+        if index == self.length-1:
+            return self.pop()
+
+        temp = self.get(index)
+        before = temp.prev
+        after = temp.next
+
+        temp.prev = None
+        temp.next = None
+        before.next = after
+        after.prev = before
+
+        self.length -= 1
+
+        return temp
+
     def get_length(self):
         return self.length
