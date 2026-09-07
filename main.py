@@ -1,7 +1,7 @@
 from doubly_linked_list import DoublyLinkedList
 
 # create
-my_doubly_linked_list = DoublyLinkedList(5)
+my_doubly_linked_list: DoublyLinkedList = DoublyLinkedList(5)
 my_doubly_linked_list.print_list()
 
 print()
@@ -13,8 +13,8 @@ my_doubly_linked_list.print_list()
 print()
 
 # pop
-print(my_doubly_linked_list.pop().get_value()) # 2 nodes
-print(my_doubly_linked_list.pop().get_value()) # 1 node
+print(my_doubly_linked_list.pop().get_value()) # type: ignore[union-attr]
+print(my_doubly_linked_list.pop().get_value()) # type: ignore[union-attr]
 print(my_doubly_linked_list.pop()) # No nodes
 
 print()
@@ -27,9 +27,9 @@ my_doubly_linked_list.print_list()
 print()
 
 # pop start
-print(my_doubly_linked_list.pop_start().get_value())
-print(my_doubly_linked_list.pop_start().get_value())
-print(my_doubly_linked_list.pop_start())
+print(my_doubly_linked_list.pop_start().get_value()) # type: ignore[union-attr]
+print(my_doubly_linked_list.pop_start().get_value()) # type: ignore[union-attr]
+print(my_doubly_linked_list.pop_start()) # No nodes
 
 print()
 
@@ -38,8 +38,8 @@ for value in range(5, 26, 5):
     my_doubly_linked_list.append(value)
 
 # get
-print(my_doubly_linked_list.get(1).get_value())
-print(my_doubly_linked_list.get(3).get_value())
+print(my_doubly_linked_list.get(1).get_value()) # type: ignore[union-attr]
+print(my_doubly_linked_list.get(3).get_value()) # type: ignore[union-attr]
 
 print()
 

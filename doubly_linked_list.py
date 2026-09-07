@@ -1,29 +1,31 @@
+from typing import Any, Literal
+
 from node import Node
 
 
 class DoublyLinkedList:
-    def __init__(self, value):
-        new_node = Node(value)
-        self.head = new_node
-        self.tail = new_node
-        self.length = 1
+    def __init__(self, value: Any) -> None:
+        new_node: Node = Node(value)
+        self.head: Node | None = new_node
+        self.tail: Node | None = new_node
+        self.length: int = 1
 
-    def print_list(self):
-        current = self.head
+    def print_list(self) -> None:
+        current: Node | None = self.head
         while current is not None:
             print(f"{current.value} ", end="")
             current = current.next
         print()
 
     # TC = O(1)
-    def append(self, value):
-        new_node = Node(value)
+    def append(self, value: Any) -> Literal[True]:
+        new_node: Node = Node(value)
 
         if self.head is None:
             self.head = new_node
             self.tail = new_node
         else:
-            self.tail.next = new_node
+            self.tail.next = new_node # type: ignore[union-attr]
             new_node.prev = self.tail
             self.tail = new_node
 
@@ -32,18 +34,18 @@ class DoublyLinkedList:
         return True
 
     # TC = O(1)
-    def pop(self):
+    def pop(self) -> Node | None:
         if self.head is None:
-            return
+            return None
 
-        temp = self.tail
+        temp: Node = self.tail # type: ignore[assignment]
 
         if self.head.next is None:
             self.head = None
             self.tail = None
         else:
-            self.tail = self.tail.prev
-            self.tail.next = None
+            self.tail = self.tail.prev # type: ignore[union-attr]
+            self.tail.next = None # type: ignore[union-attr]
             temp.prev = None
 
         self.length -= 1
@@ -51,8 +53,8 @@ class DoublyLinkedList:
         return temp 
 
     # TC = O(1)
-    def prepend(self, value):
-        new_node = Node(value)
+    def prepend(self, value: Any) -> Literal[True]:
+        new_node: Node = Node(value)
 
         if self.head is None:
             self.head = new_node
@@ -67,11 +69,11 @@ class DoublyLinkedList:
         return True
 
     # TC = O(1)
-    def pop_start(self):
+    def pop_start(self) -> Node | None:
         if self.head is None:
-            return
+            return None
 
-        temp = self.head
+        temp: Node = self.head
 
         if self.head.next is None:
             self.head = None
@@ -86,24 +88,25 @@ class DoublyLinkedList:
         return temp
 
     # TC = O(n)
-    def get(self, index):
+    def get(self, index: int) -> Node | None:
         if index < 0 or index >= self.length:
-            return
+            return None
+
+        temp: Node = self.head # type: ignore[assignment]
 
         if index < self.length/2:
-            temp = self.head
             for _ in range(index):
-                temp = temp.next
+                temp = temp.next # type: ignore[assignment]
         else:
-            temp = self.tail
+            temp = self.tail # type: ignore[assignment]
             for _ in range(self.length-1, index, -1):
-                temp = temp.prev
+                temp = temp.prev # type: ignore[assignment]
 
         return temp
 
     # TC = O(n)
-    def set_value(self, index, value):
-        req_node = self.get(index)
+    def set_value(self, index: int, value: Any) -> bool:
+        req_node: Node | None = self.get(index)
 
         if req_node is not None:
             req_node.value = value
@@ -112,7 +115,7 @@ class DoublyLinkedList:
         return False
 
     # TC = O(n)
-    def insert(self, index, value):
+    def insert(self, index: int, value: Any) -> bool:
         if index < 0 or index > self.length:
             return False
         
@@ -122,9 +125,9 @@ class DoublyLinkedList:
         if index == self.length:
             return self.append(value)
 
-        new_node = Node(value)
-        before = self.get(index-1)
-        after = before.next
+        new_node: Node = Node(value)
+        before: Node = self.get(index-1) # type: ignore[assignment]
+        after: Node = before.next # type: ignore[assignment]
 
         new_node.prev = before
         new_node.next = after
@@ -136,9 +139,9 @@ class DoublyLinkedList:
         return True
 
     # TC = O(n)
-    def remove(self, index):
+    def remove(self, index: int) -> Node | None:
         if index < 0 or index >= self.length:
-            return
+            return None
 
         if index == 0:
             return self.pop_start()
@@ -146,9 +149,9 @@ class DoublyLinkedList:
         if index == self.length-1:
             return self.pop()
 
-        temp = self.get(index)
-        before = temp.prev
-        after = temp.next
+        temp: Node = self.get(index) # type: ignore[assignment]
+        before: Node = temp.prev # type: ignore[assignment]
+        after: Node = temp.next # type: ignore[assignment]
 
         temp.prev = None
         temp.next = None
@@ -159,5 +162,5 @@ class DoublyLinkedList:
 
         return temp
 
-    def get_length(self):
+    def get_length(self) -> int:
         return self.length
