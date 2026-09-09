@@ -1,31 +1,33 @@
-from typing import Any, Literal
+from typing import Literal, cast
 
 from node import Node
 
 
 class DoublyLinkedList:
-    def __init__(self, value: Any) -> None:
-        new_node: Node = Node(value)
+    def __init__(self, value: int) -> None:
+        new_node = Node(value)
         self.head: Node | None = new_node
         self.tail: Node | None = new_node
-        self.length: int = 1
+        self.length = 1
 
     def print_list(self) -> None:
-        current: Node | None = self.head
+        current = self.head
         while current is not None:
             print(f"{current.value} ", end="")
             current = current.next
         print()
 
     # TC = O(1)
-    def append(self, value: Any) -> Literal[True]:
-        new_node: Node = Node(value)
+    def append(self, value: int) -> Literal[True]:
+        new_node = Node(value)
 
         if self.head is None:
             self.head = new_node
             self.tail = new_node
         else:
-            self.tail.next = new_node # type: ignore[union-attr]
+            assert self.tail is not None, "List corruption detected: head is set but tail is None"
+
+            self.tail.next = new_node
             new_node.prev = self.tail
             self.tail = new_node
 
@@ -38,14 +40,18 @@ class DoublyLinkedList:
         if self.head is None:
             return None
 
-        temp: Node = self.tail # type: ignore[assignment]
+        assert self.tail is not None, "List corruption detected: head is set but tail is None"
+        
+        temp = self.tail
 
         if self.head.next is None:
             self.head = None
             self.tail = None
         else:
-            self.tail = self.tail.prev # type: ignore[union-attr]
-            self.tail.next = None # type: ignore[union-attr]
+            assert self.tail.prev is not None, "List corruption detected: multiple nodes exist but tail.prev is None"
+
+            self.tail = self.tail.prev
+            self.tail.next = None
             temp.prev = None
 
         self.length -= 1
@@ -53,8 +59,8 @@ class DoublyLinkedList:
         return temp 
 
     # TC = O(1)
-    def prepend(self, value: Any) -> Literal[True]:
-        new_node: Node = Node(value)
+    def prepend(self, value: int) -> Literal[True]:
+        new_node = Node(value)
 
         if self.head is None:
             self.head = new_node
@@ -73,7 +79,7 @@ class DoublyLinkedList:
         if self.head is None:
             return None
 
-        temp: Node = self.head
+        temp = self.head
 
         if self.head.next is None:
             self.head = None
@@ -92,20 +98,24 @@ class DoublyLinkedList:
         if index < 0 or index >= self.length:
             return None
 
-        temp: Node = self.head # type: ignore[assignment]
+        temp = self.head
 
         if index < self.length/2:
             for _ in range(index):
-                temp = temp.next # type: ignore[assignment]
+                assert temp is not None, "List length mismatch: encountered None while traversing forward"
+                
+                temp = temp.next
         else:
-            temp = self.tail # type: ignore[assignment]
+            temp = self.tail
             for _ in range(self.length-1, index, -1):
-                temp = temp.prev # type: ignore[assignment]
+                assert temp is not None, "List length mismatch: encountered None while traversing backward"
+
+                temp = temp.prev
 
         return temp
 
     # TC = O(n)
-    def set_value(self, index: int, value: Any) -> bool:
+    def set_value(self, index: int, value: int) -> bool:
         req_node: Node | None = self.get(index)
 
         if req_node is not None:
@@ -115,7 +125,7 @@ class DoublyLinkedList:
         return False
 
     # TC = O(n)
-    def insert(self, index: int, value: Any) -> bool:
+    def insert(self, index: int, value: int) -> bool:
         if index < 0 or index > self.length:
             return False
         
@@ -125,9 +135,11 @@ class DoublyLinkedList:
         if index == self.length:
             return self.append(value)
 
-        new_node: Node = Node(value)
-        before: Node = self.get(index-1) # type: ignore[assignment]
-        after: Node = before.next # type: ignore[assignment]
+        new_node = Node(value)
+        before: Node = cast(Node, self.get(index-1))
+        after = before.next
+
+        assert after is not None, "List corruption detected: after should not be None when inserting in the middle"
 
         new_node.prev = before
         new_node.next = after
@@ -149,9 +161,11 @@ class DoublyLinkedList:
         if index == self.length-1:
             return self.pop()
 
-        temp: Node = self.get(index) # type: ignore[assignment]
-        before: Node = temp.prev # type: ignore[assignment]
-        after: Node = temp.next # type: ignore[assignment]
+        temp: Node = cast(Node, self.get(index))
+        before = temp.prev
+        after = temp.next
+
+        assert before is not None and after is not None, "List corruption detected: before and after should not be None when removing from the middle"
 
         temp.prev = None
         temp.next = None
