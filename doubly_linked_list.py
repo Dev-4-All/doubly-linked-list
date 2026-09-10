@@ -176,5 +176,13 @@ class DoublyLinkedList:
 
         return temp
 
+    def reverse(self) -> None:
+        current = self.__head
+        while current is not None:
+            current.next, current.prev = current.prev, current.next
+            current = current.prev
+
+        self.__head, self.__tail = self.__tail, self.__head
+
     def get_length(self) -> int:
         return self.__length

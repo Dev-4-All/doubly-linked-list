@@ -64,3 +64,9 @@ my_doubly_linked_list.remove(my_doubly_linked_list.get_length()-1)
 my_doubly_linked_list.print_list()
 my_doubly_linked_list.remove(2)
 my_doubly_linked_list.print_list()
+
+print()
+
+# reverse
+my_doubly_linked_list.reverse()
+my_doubly_linked_list.print_list()
